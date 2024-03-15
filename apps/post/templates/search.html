@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+    <head>
+        <title>Post Page Search</title>
+    </head>
+    <body>
+        <h3>Post page search</h3>
+        {% block content %}
+            <form method="GET" class="post-search">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        {% endblock %}
+        <a href="/"><br />
+            <button>Main Page</button>
+        </a>
+    </body>
+</html>

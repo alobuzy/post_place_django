@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+    <head>
+        <title>User profile</title>
+    </head>
+    <body>
+        {% if id is None %}
+            <h1>Your profile</h1>
+        {% else %}
+            <h1>User profile</h1>
+        {% endif %}
+
+        <p>Username: {{ user.username }}<br \></p>
+        <p>Staff: {{ user.is_staff }}<br \></p>
+        <p>Superuser: {{ user.is_superuser }}</p>
+        
+        {% if id is None %}
+            <h1>Your posts</h1>
+        {% else %}
+            <h1>User posts</h1>
+        {% endif %}
+        {% if user.is_staff %}
+            {% if post_count == 0 %}
+                <h4>No posts here yet</h4>
+            {% else %}
+                <h5>Total posts: {{ post_count }}</h5>
+                {% for post in posts %}
+                <div class="user-post-body">
+                    <h2><a href="{% url 'detail' id=post.id %}">{{ post.title }}</a></h2>
+                    <p>{{ post.text|linebreaksbr }}</p>
+                    <h3>Created: {{ post.created_date }} | Author: {{ post.author }} | ID: {{ post.id }}</h3>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            {% if id is None %}
+                <h4>You can't create posts</h4>
+            {% else %}
+                <h4>This user can't create posts</h4>
+            {% endif %}
+        {% endif %}
+        <a href="/">
+            <button>Main Page</button>
+        </a>
+    </body>
+</html>

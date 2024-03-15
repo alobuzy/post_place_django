@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Post Place</title>
+    </head>
+    <body>
+        <h1><a href="{% url 'main' %}">Post Place</a></h1>
+        <div>
+            {% if user.is_authenticated %}
+                <p>Hello, <a href="{% url 'profile' %}">{{ user.username }}</a>!<br \></p>
+                <a href="{% url 'logout' %}">
+                    <button>Logout</button>
+                </a><br />
+                {% if user.is_staff %}
+                    <a href="{% url 'create' %}"><br />
+                        <button>Create Post</button>
+                    </a>
+                {% else %}
+                    <p>Only users with staff permission can create posts</p>
+                {% endif %}
+                <div class="post-search">
+                    <h3>Post Searching</h3>
+                    {% block content %}
+                    <form method="GET" class="post-search">{% csrf_token %}
+                        {{ search_form.as_p }}
+                        <button type="submit" class="search-button">Search</button>
+                    </form>
+                {% endblock %}
+                </div>
+            {% else %}
+                <a href="{% url 'register' %}">
+                    <button>Register</button>
+                </a><br />
+                <a href="{% url 'login' %}"><br />
+                    <button>Login</button>
+                </a>
+                <h3>Post Page Searching</h3>
+                <p><a href="{% url 'login' %}">Login</a> to use post search</p>
+            {% endif %}
+        </div>
+        {% for post in posts %}
+            <div class="post-body">
+                <h2><a href="{% url 'detail' id=post.id %}">{{ post.title }}</a></h2>
+                <p>{{ post.text|linebreaksbr }}</p>
+                <i>Created: {{ post.created_date }} | Author: <a href="{% url 'profile' id=post.author.id %}">{{ post.author }}</a> | ID: {{ post.id }}</i>
+            </div>
+        {% endfor %}
+        <a href="/admin"><br />
+            <button>Admin Panel</button>
+        </a>
+    </body>
+</html>

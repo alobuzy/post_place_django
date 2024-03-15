@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+    <head>
+        <title>Register user</title>
+    </head>
+    <body>
+        <h3>User Register</h3>
+        {% block content %}
+            <form method="POST" class="user-register">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="register-button">Register</button>
+            </form>
+        {% endblock %}
+        <a href="/"><br />
+            <button>Main Page</button>
+        </a>
+    </body>
+</html>

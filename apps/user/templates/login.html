@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+    <head>
+        <title>Login user</title>
+    </head>
+    <body>
+        <h3>Login</h3>
+        {% block content %}
+            <form method="POST" class="user-login">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="login-button">Login</button>
+            </form>
+            {% if wrong_user %}
+                <h6>Wrong username or password!</h6>
+            {% endif %}
+        {% endblock %}
+        <a href="/"><br />
+            <button>Main Page</button>
+        </a>
+    </body>
+</html>

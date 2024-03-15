@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+    <head>
+        <title>Post Detail</title>
+    </head>
+    <body>
+        {% block content %}
+            <div class="post">
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.text|linebreaksbr }}</p>
+                <i>Created: {{ post.created_date }} | Author: <a href="{% url 'profile' id=post.author.id %}">{{ post.author }}</a></i>
+            </div>
+        {% endblock %}
+        
+        <h3>Send comment</h3>
+        <form method="POST" class="comment-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="send-comment-btn">Send</button>
+        </form>
+
+        {% if comments_count > 0 %}
+            <h3>Total comments: {{ comments_count }}</h3>
+        {% else %}
+            <h3>No comments here yet</h3>
+        {% endif %}
+
+        {% for comment in comments %}
+            <p>{{ comment.text }}</p>
+            <i>Created: {{ comment.created_date }} | Author: <a href="{% url 'profile' id=comment.author.id %}">{{ comment.author }}</a><br /></i>
+        {% endfor %}
+
+        <a href="/"><br />
+            <button>Main Page</button>
+        </a>
+    </body>
+</html>
